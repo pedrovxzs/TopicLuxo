@@ -4,9 +4,7 @@
 O objetivo dessa atividade é exercitar o que vocês aprenderam no cinema com algumas variações. Aqui, vamos implementar um sistema de alocação de passageiros em uma topic. Nossa topic tem uma quantidade máxima de passageiros, mas também define alguns assentos preferenciais.
 
 - [Requisitos](#requisitos)
-- [Shell](#shell)
 - [Diagrama](#diagrama)
-- [Esqueleto](#esqueleto)
 
 
 ***
@@ -44,8 +42,8 @@ Existe uma lista para as cadeiras normais e outra para as preferenciais. Para fa
 ```mermaid
 classDiagram
     class Topic {
-        - List<Passageiro> preferenciais
-        - List<Passageiro> normais
+        - Passageiro[] preferenciais
+        - Passageiro[] normais
         - int capacidade
         - int qtdPreferenciais
         + Topic(int capacidade, int qtdPreferenciais)
