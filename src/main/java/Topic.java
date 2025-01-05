@@ -39,7 +39,7 @@ public class Topic {
             return null;
         }
         if (assentosPreferenciais[lugar].equals("@")) {
-            return new Passageiro("", 0);  // Retorna passageiro vazio ao invés de null
+            return new Passageiro("", 0); 
         }
         return extrairPassageiro(assentosPreferenciais[lugar], "@");
     }
@@ -164,16 +164,20 @@ public class Topic {
 
     @Override
     public String toString() {
+ 
         String preferenciais = Arrays.toString(assentosPreferenciais)
-                .replace("[", "")
-                .replace("]", "")
-                .replace(",", "");
+                .replace("[", "")   
+                .replace("]", "")    
+                .replace(",", "")     
+                .trim();              
 
         String normais = Arrays.toString(assentosNormais)
-                .replace("[", "")
-                .replace("]", "")
-                .replace(",", "");
+                .replace("[", "")    
+                .replace("]", "")      
+                .replace(",", "")    
+                .trim();                 
 
         return "[" + preferenciais + " " + normais + "]";
     }
+
 }
