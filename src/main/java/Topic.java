@@ -39,7 +39,7 @@ public class Topic {
             return null;
         }
         if (assentosPreferenciais[lugar].equals("@")) {
-            return null;  // Assento vazio
+            return new Passageiro("", 0);  // Retorna passageiro vazio ao invés de null
         }
         return extrairPassageiro(assentosPreferenciais[lugar], "@");
     }
@@ -59,17 +59,16 @@ public class Topic {
 
     public int getVagas() {
         int vagas = 0;
-        for (int i = 0; i < assentosPreferenciais.length; i++) {
+        for (int i = 0; i < qtdPreferenciais; i++) {
             if (assentosPreferenciais[i].equals("@")) {
                 vagas++;
             }
         }
-        for (int i = 0; i < assentosNormais.length; i++) {
+        for (int i = 0; i < qtdNormais; i++) {
             if (assentosNormais[i].equals("=")) {
                 vagas++;
             }
         }
-
         return vagas;
     }
 
@@ -92,18 +91,16 @@ public class Topic {
     }
 
     private boolean passageiroJaEstaNaTopic(String nome) {
-        for (int i = 0; i < assentosPreferenciais.length; i++) {
+        for (int i = 0; i < qtdPreferenciais; i++) {
             if (extrairNome(assentosPreferenciais[i], "@").equals(nome)) {
                 return true;
             }
         }
-
-        for (int i = 0; i < assentosNormais.length; i++) {
+        for (int i = 0; i < qtdNormais; i++) {
             if (extrairNome(assentosNormais[i], "=").equals(nome)) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -128,19 +125,25 @@ public class Topic {
 
         if (passageiro.ePrioritario()) {
             if (vagaPreferencial >= 0) {
-                assentosPreferenciais[vagaPreferencial] = passageiro.getNome() + ":" + passageiro.getIdade();
+                assentosPreferenciais[vagaPreferencial] = "@" + infoPassageiro;
+                return true;
             } else if (vagaNormal >= 0) {
-                assentosNormais[vagaNormal] = passageiro.getNome() + ":" + passageiro.getIdade();
+                assentosNormais[vagaNormal] = "=" + infoPassageiro;
+                return true;
             }
         } else {
             if (vagaNormal >= 0) {
-                assentosNormais[vagaNormal] = passageiro.getNome() + ":" + passageiro.getIdade();
+                assentosNormais[vagaNormal] = "=" + infoPassageiro;
+                return true;
+            } else if (vagaPreferencial >= 0) {
+                assentosPreferenciais[vagaPreferencial] = "@" + infoPassageiro;
+                return true;
             }
         }
         return false;
     }
 
-        public boolean descer(String nome) {
+    public boolean descer(String nome) {
         for (int i = 0; i < qtdPreferenciais; i++) {
             if (extrairNome(assentosPreferenciais[i], "@").equals(nome)) {
                 assentosPreferenciais[i] = "@";
@@ -161,13 +164,11 @@ public class Topic {
 
     @Override
     public String toString() {
-        // Formatação dos assentos preferenciais
         String preferenciais = Arrays.toString(assentosPreferenciais)
                 .replace("[", "")
                 .replace("]", "")
                 .replace(",", "");
 
-        // Formatação dos assentos normais
         String normais = Arrays.toString(assentosNormais)
                 .replace("[", "")
                 .replace("]", "")
@@ -175,5 +176,4 @@ public class Topic {
 
         return "[" + preferenciais + " " + normais + "]";
     }
-
 }
