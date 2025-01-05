@@ -164,32 +164,11 @@ public class Topic {
 
     @Override
     public String toString() {
-        String preferenciais = "";
-        for (int i = 0; i < assentosPreferenciais.length; i++) {
-            if (assentosPreferenciais[i].equals("@")) {
-                preferenciais += "@";
-            } else {
-                preferenciais += assentosPreferenciais[i];
-            }
-            if (i < assentosPreferenciais.length - 1) {
-
-            }
-        }
-
-        String normais = "";
-        for (int i = 0; i < assentosNormais.length; i++) {
-            if (assentosNormais[i].equals("=")) {
-                normais += "=";
-            } else {
-
-                normais += assentosNormais[i];
-            }
-            if (i < assentosNormais.length - 1) {
-                normais += " ";
-            }
-        }
-
-        return "[" + preferenciais + " " + normais + "]";
+        String regex = "[\\[\\],]";
+        
+        return "[" +
+                Arrays.toString(assentosPreferenciais).replaceAll(regex, "") + " " +
+                Arrays.toString(assentosNormais).replaceAll(regex, "") + " " +
+                "]";
     }
-
 }
