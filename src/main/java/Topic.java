@@ -64,8 +64,6 @@ public class Topic {
                 vagas++;
             }
         }
-
-        // Verifica as vagas nos assentos normais
         for (int i = 0; i < assentosNormais.length; i++) {
             if (assentosNormais[i].equals("=")) {
                 vagas++;
@@ -128,15 +126,21 @@ public class Topic {
         int vagaNormal = encontrarVagaNormal();
         String infoPassageiro = passageiro.getNome() + ":" + passageiro.getIdade();
 
-        if ((passageiro.ePrioritario() && vagaPreferencial >= 0) || vagaNormal < 0) {
-            assentosPreferenciais[vagaPreferencial] = infoPassageiro;
+        if (passageiro.ePrioritario()) {
+            if (vagaPreferencial >= 0) {
+                assentosPreferenciais[vagaPreferencial] = passageiro.getNome() + ":" + passageiro.getIdade();
+            } else if (vagaNormal >= 0) {
+                assentosNormais[vagaNormal] = passageiro.getNome() + ":" + passageiro.getIdade();
+            }
         } else {
-            assentosNormais[vagaNormal] = infoPassageiro;
+            if (vagaNormal >= 0) {
+                assentosNormais[vagaNormal] = passageiro.getNome() + ":" + passageiro.getIdade();
+            }
         }
-        return true;
+        return false;
     }
 
-    public boolean descer(String nome) {
+        public boolean descer(String nome) {
         for (int i = 0; i < qtdPreferenciais; i++) {
             if (extrairNome(assentosPreferenciais[i], "@").equals(nome)) {
                 assentosPreferenciais[i] = "@";
@@ -157,10 +161,19 @@ public class Topic {
 
     @Override
     public String toString() {
-        return "[" +
-                Arrays.toString(assentosPreferenciais).replaceAll("[\\[\\],]", "") +
-                " " +
-                Arrays.toString(assentosNormais).replaceAll("[\\[\\],]", "") +
-                "]";
+        // Formatação dos assentos preferenciais
+        String preferenciais = Arrays.toString(assentosPreferenciais)
+                .replace("[", "")
+                .replace("]", "")
+                .replace(",", "");
+
+        // Formatação dos assentos normais
+        String normais = Arrays.toString(assentosNormais)
+                .replace("[", "")
+                .replace("]", "")
+                .replace(",", "");
+
+        return "[" + preferenciais + " " + normais + "]";
     }
+
 }
