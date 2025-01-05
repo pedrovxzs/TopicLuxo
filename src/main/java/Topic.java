@@ -39,7 +39,7 @@ public class Topic {
             return null;
         }
         if (assentosPreferenciais[lugar].equals("@")) {
-            return new Passageiro("", 0); 
+            return new Passageiro("", 0);
         }
         return extrairPassageiro(assentosPreferenciais[lugar], "@");
     }
@@ -164,18 +164,30 @@ public class Topic {
 
     @Override
     public String toString() {
- 
-        String preferenciais = Arrays.toString(assentosPreferenciais)
-                .replace("[", "")   
-                .replace("]", "")    
-                .replace(",", "")     
-                .trim();              
+        String preferenciais = "";
+        for (int i = 0; i < assentosPreferenciais.length; i++) {
+            if (assentosPreferenciais[i].equals("@")) {
+                preferenciais += "@";
+            } else {
+                preferenciais += assentosPreferenciais[i];
+            }
+            if (i < assentosPreferenciais.length - 1) {
 
-        String normais = Arrays.toString(assentosNormais)
-                .replace("[", "")    
-                .replace("]", "")      
-                .replace(",", "")    
-                .trim();                 
+            }
+        }
+
+        String normais = "";
+        for (int i = 0; i < assentosNormais.length; i++) {
+            if (assentosNormais[i].equals("=")) {
+                normais += "=";
+            } else {
+
+                normais += assentosNormais[i];
+            }
+            if (i < assentosNormais.length - 1) {
+                normais += " ";
+            }
+        }
 
         return "[" + preferenciais + " " + normais + "]";
     }
